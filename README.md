@@ -5,7 +5,7 @@ Welcome to the Interview Preparation Repository – your go-to resource for mast
 
 | Problem  |  Link |
 |---|---|
-|  Compute and print the pascal traingle, given the no. of levels | [pascal_triangle.py](https://github.com/JohnKamaujk/alx-interview/)  |
+|  Compute and print the pascal traingle, given the no. of levels | [pascal_triangle.py](https://github.com/JohnKamaujk/alx-interview/blob/main/0x00-pascal_triangle/0-pascal_triangle.py)  |
 |   | []()  |
 |   | []()  |
 |   | []()  |
