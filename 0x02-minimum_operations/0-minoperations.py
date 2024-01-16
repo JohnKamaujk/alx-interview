@@ -31,7 +31,7 @@ def minOperations(n):
             characters_generated += clipboard
             operations_count += 2
         elif clipboard > 0:
-            #Perform a Paste operation.
+            # Perform a Paste operation.
             characters_generated += clipboard
             operations_count += 1
 
