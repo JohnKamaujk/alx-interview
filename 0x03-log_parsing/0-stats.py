@@ -14,10 +14,10 @@ def parse_log_line(log_line):
         dict: A dictionary containing status code and file size.
     '''
     pattern = (
-        r'\s*(?P<ip>\S+)\s*'
-        r'\s*\[(?P<date>\d+\-\d+\-\d+ \d+:\d+:\d+\.\d+)\]'
-        r'\s*"(?P<request>[^"]*)"\s*'
-        r'\s*(?P<status_code>\S+)'
+        r'\s*(?P<ip>\S+)\s*',
+        r'\s*\[(?P<date>\d+\-\d+\-\d+ \d+:\d+:\d+\.\d+)\]',
+        r'\s*"(?P<request>[^"]*)"\s*',
+        r'\s*(?P<status_code>\S+)',
         r'\s*(?P<file_size>\d+)'
     )
     log_fmt = '{}\\-{}{}{}{}\\s*'.format(pattern[0], pattern[1], pattern[2],
