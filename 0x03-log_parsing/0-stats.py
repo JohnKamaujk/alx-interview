@@ -46,7 +46,7 @@ def update_metrics(log_line, current_total_size, status_code_counts):
     '''
     log_info = parse_log_line(log_line)
     status_code = log_info.get('status_code', '0')
-    if status_code in status_code_counts:
+    if status_code in status_code_counts.keys():
         status_code_counts[status_code] += 1
     new_total_size = current_total_size + log_info['file_size']
     return new_total_size
