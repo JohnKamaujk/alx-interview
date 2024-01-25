@@ -66,7 +66,7 @@ def print_statistics(total_file_size, status_codes_counts):
             print('{:s}: {:d}'.format(status_code, num), flush=True)
 
 
-def run():
+def start_log_parser():
     '''Starts the log parser.
     '''
     line_num = 0
@@ -97,4 +97,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    start_log_parser()
