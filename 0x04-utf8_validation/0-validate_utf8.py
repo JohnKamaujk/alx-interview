@@ -4,58 +4,71 @@
 
 
 def validUTF8(data):
-    """Checks if a list of integers are valid UTF-8 codepoints.
+    """Checks if a list of integers represents valid UTF-8 codepoints.
     See <https://datatracker.ietf.org/doc/html/rfc3629#page-4>
     """
-    skip = 0
-    n = len(data)
-    for i in range(n):
-        if skip > 0:
-            skip -= 1
+    # Initialize variables
+    remaining_bytes = 0
+    data_length = len(data)
+
+    # Iterate through the list of integers
+    for index in range(data_length):
+        # Skip processing if there are remaining bytes from a multi-byte char
+        if remaining_bytes > 0:
+            remaining_bytes -= 1
             continue
-        if type(data[i]) != int or data[i] < 0 or data[i] > 0x10ffff:
+
+        # Validate the current integer
+        current_integer = data[index]
+        if (type(current_integer) != int or current_integer < 0
+           or current_integer > 0x10ffff):
             return False
-        elif data[i] <= 0x7f:
-            skip = 0
-        elif data[i] & 0b11111000 == 0b11110000:
-            # 4-byte utf-8 character encoding
-            span = 4
-            if n - i >= span:
-                next_body = list(map(
+        elif current_integer <= 0x7f:
+            remaining_bytes = 0
+        elif current_integer & 0b11111000 == 0b11110000:
+            # 4-byte UTF-8 character encoding
+            expected_bytes = 4
+            if data_length - index >= expected_bytes:
+                # Check the format of subsequent bytes
+                valid_body = all(map(
                     lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
+                    data[index + 1: index + expected_bytes],
                 ))
-                if not all(next_body):
+                if not valid_body:
                     return False
-                skip = span - 1
+                remaining_bytes = expected_bytes - 1
             else:
                 return False
-        elif data[i] & 0b11110000 == 0b11100000:
-            # 3-byte utf-8 character encoding
-            span = 3
-            if n - i >= span:
-                next_body = list(map(
+        elif current_integer & 0b11110000 == 0b11100000:
+            # 3-byte UTF-8 character encoding
+            expected_bytes = 3
+            if data_length - index >= expected_bytes:
+                # Check the format of subsequent bytes
+                valid_body = all(map(
                     lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
+                    data[index + 1: index + expected_bytes],
                 ))
-                if not all(next_body):
+                if not valid_body:
                     return False
-                skip = span - 1
+                remaining_bytes = expected_bytes - 1
             else:
                 return False
-        elif data[i] & 0b11100000 == 0b11000000:
-            # 2-byte utf-8 character encoding
-            span = 2
-            if n - i >= span:
-                next_body = list(map(
+        elif current_integer & 0b11100000 == 0b11000000:
+            # 2-byte UTF-8 character encoding
+            expected_bytes = 2
+            if data_length - index >= expected_bytes:
+                # Check the format of subsequent bytes
+                valid_body = all(map(
                     lambda x: x & 0b11000000 == 0b10000000,
-                    data[i + 1: i + span],
+                    data[index + 1: index + expected_bytes],
                 ))
-                if not all(next_body):
+                if not valid_body:
                     return False
-                skip = span - 1
+                remaining_bytes = expected_bytes - 1
             else:
                 return False
         else:
             return False
+
+    # All characters are valid UTF-8 codepoints
     return True
