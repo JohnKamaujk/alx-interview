@@ -20,7 +20,7 @@ def makeChange(coins, total):
             min_coins_needed[i] = min(min_coins_needed[i],
                                       min_coins_needed[i - coin] + 1)
 
-    # If min_coins_needed[total] is still float('inf'), total
+    # If min_coins_needed[total] is still float('inf'),total
     # cannot be met by any combination of coins
     if min_coins_needed[total] != float('inf'):
         return min_coins_needed[total]
